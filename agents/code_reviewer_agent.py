@@ -1,4 +1,4 @@
-from constants import REVIEWER_SYSTEM_PROMPT
+from utils.prompt_template import REVIEWER_SYSTEM_PROMPT
 from strands import Agent, tool
 from strands.models import BedrockModel
 from strands_tools import editor, file_read, file_write, python_repl, shell
