@@ -2,10 +2,10 @@ import os, json
 from strands import Agent, tool
 from strands_tools import file_read, shell, file_write
 from strands.models import BedrockModel
+from agents.designer_team import designer_team
 from utils.constants import CLAUDE_SONNET_3_7
+from utils.prompt_template import COORDINATOR_SYSTEM_PROMPT
 from utils.utils import app_logger as logger 
-from agents.developer_agent import developer
-from utils.prompt_template import PROJECT_MANAGER_SYSTEM_PROMPT
 
 #env variable configure
 #os.environ["STRANDS_TOOL_CONSOLE_MODE"] = "enabled"
@@ -26,19 +26,22 @@ def custom_callback_handler(**kwargs):
 def message_buffer_handler(**kwargs):
     # When a new message is created from the assistant, print its content
     if "message" in kwargs and kwargs["message"].get("role") == "assistant":
-        print(json.dumps(kwargs["message"], indent=2, ensure_ascii=False))
+        logger.info(json.dumps(kwargs["message"], indent=2, ensure_ascii=False))
 
-bedrock_model = BedrockModel(
+claude_sonnet_3_7 = BedrockModel(
   model_id=CLAUDE_SONNET_3_7,
   temperature=0.3,
   streaming=True, # Enable/disable streaming
 )
 
 # Create coordinator Agent
-project_manager_agent = Agent(
-    system_prompt=PROJECT_MANAGER_SYSTEM_PROMPT,
-    tools=[shell, file_read, file_write, developer],
+coodinartor_agent = Agent(
+    system_prompt=COORDINATOR_SYSTEM_PROMPT,
+    model=claude_sonnet_3_7,
+    tools=[file_read, designer_team],
     callback_handler=message_buffer_handler
 )
 
-#response = project_manager_agent("请帮我将文件夹 ./airline-booking-main 中的代码，从java8升级到java17。")
+
+#test designer team
+response = coodinartor_agent("请帮我设计一个图片，不需要更多的工作，图片包含aws的log和贝索斯照片.")

@@ -47,3 +47,23 @@ aws_cost_client = MCPClient(
 aws_cloudwatch_logs_client = MCPClient(
     lambda: stdio_client(StdioServerParameters(command="uvx", args=["awslabs.cloudwatch-logs-mcp-server@latest"], env={ "FASTMCP_LOG_LEVEL": "ERROR", "AWS_REGION": "us-east-1"}))
 )
+
+# {
+#   "mcpServers": {
+#     "awslabs.nova-canvas-mcp-server": {
+#       "command": "uvx",
+#       "args": ["awslabs.nova-canvas-mcp-server@latest"],
+#       "env": {
+#         "AWS_PROFILE": "your-aws-profile",
+#         "AWS_REGION": "us-east-1",
+#         "FASTMCP_LOG_LEVEL": "ERROR"
+#       },
+#       "disabled": false,
+#       "autoApprove": []
+#     }
+#   }
+# }
+
+aws_canvas_client = MCPClient(
+    lambda: stdio_client(StdioServerParameters(command="uvx", args=["awslabs.nova-canvas-mcp-server@latest"], env={ "AWS_PROFILE":"default", "FASTMCP_LOG_LEVEL": "ERROR", "AWS_REGION": "us-east-1"}))
+)
