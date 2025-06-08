@@ -27,7 +27,7 @@ def setup_logger(name, log_file, level=logging.INFO, max_size=10*1024*1024, back
         
         # 定义日志格式
         formatter = logging.Formatter(
-            '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+            '%(asctime)s - %(name)s - %(levelname)s - %(filename)s:%(lineno)d - %(message)s'
         )
         file_handler.setFormatter(formatter)
         console_handler.setFormatter(formatter)
