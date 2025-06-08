@@ -43,10 +43,10 @@ coodinartor_agent = Agent(
     callback_handler=message_buffer_handler
 )
 
-coordinator_agent = Agent(tools=[agent_graph])
+graph_agent = Agent(tools=[agent_graph])
 
 # Create a research team with a star topology
-result = coordinator_agent.tool.agent_graph(
+result = graph_agent.tool.agent_graph(
     action="create",
     graph_id="total_team",
     topology={
